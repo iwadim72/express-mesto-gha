@@ -41,15 +41,15 @@ module.exports.searchUserById = (req, res) => {
 module.exports.updateUser = (req, res) => {
   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, about })
+  User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true, context: 'query', new: true })
     .then((user) => {
       if (user) {
         res.send({ data: user });
       } else { res.status(404).send({ message: 'Пользователь с указанным _id не найден.' }); }
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(400).send({ message: 'Переданы некорректные данные при обновлении аватара.' });
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные при обновлении профиля.' });
       } else {
         res.status(500).send({ message: 'Ошибка по умолчанию' });
       }
@@ -59,7 +59,7 @@ module.exports.updateUser = (req, res) => {
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar })
+  User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, context: 'query', new: true })
     .then((user) => {
       if (user) {
         res.send({ data: user });
