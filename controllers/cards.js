@@ -33,7 +33,13 @@ module.exports.deleteCard = (req, res) => {
         res.status(404).send({ message: 'Карточка с указанным _id не найдена.' });
       }
     })
-    .catch(() => res.status(500).send({ message: 'Ошибка по умолчанию' }));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные при создании карточки.' });
+      } else {
+        res.status(500).send({ message: 'Ошибка по умолчанию' });
+      }
+    });
 };
 
 module.exports.likeCard = (req, res) => {
