@@ -13,18 +13,20 @@ const cardSchema = new mongoose.Schema({
   },
   owner: {
     required: true,
-    minlength: 2,
-    maxlength: 30,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
   likes: {
     default: [],
-    type: Array,
-    ref: 'user',
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
   },
   createdAt: {
-    default: Date.now(),
+    default: Date.now,
     type: Date,
   },
 });
