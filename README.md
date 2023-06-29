@@ -14,3 +14,7 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
+
+## О проекте
+
+Бекенд часть проекта Mesto, написана на nodeJs + express

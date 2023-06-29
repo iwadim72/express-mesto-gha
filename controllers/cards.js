@@ -34,8 +34,8 @@ module.exports.deleteCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Переданы некорректные данные при создании карточки.' });
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Не верный _id карточки' });
       } else {
         res.status(500).send({ message: 'Ошибка по умолчанию' });
       }
