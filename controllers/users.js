@@ -33,7 +33,7 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => {
       const result = user;
       result.password = password;
-      return { data: result };
+      res.send({ data: result });
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
