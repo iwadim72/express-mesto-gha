@@ -32,6 +32,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then((user) => res.send({ data: user }))
     .catch((err) => {
+      console.log(err);
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при создании пользователя'));
       } else if (err.code === 11000) {
