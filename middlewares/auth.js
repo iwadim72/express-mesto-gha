@@ -8,11 +8,10 @@ const handleAuthError = (res, req, next) => {
 const extractBearerToken = (header) => header.replace('Bearer ', '');
 
 module.exports = (req, res, next) => {
-  // Линтер требует сделать return, хотя он тут не нужен, буду благодарен за помощь :)
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return handleAuthError(res);
+    return handleAuthError(res, req, next);
   }
 
   const token = extractBearerToken(authorization);
@@ -26,5 +25,5 @@ module.exports = (req, res, next) => {
 
   req.user = payload;
 
-  next();
+  return next();
 };
