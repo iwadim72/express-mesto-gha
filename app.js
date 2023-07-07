@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { login, createUser } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 
 const app = express();
 
@@ -11,14 +13,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '649ddddf9cb3278fda23f62d',
-  };
-
-  next();
-});
-
-app.use('/', require('./routes/index'));
+app.post('/signin', login);
+app.post('/signup', createUser);
+app.use('/', auth, require('./routes/index'));
+app.use(require('./middlewares/error'));
 
 app.listen(PORT);
