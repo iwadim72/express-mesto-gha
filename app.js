@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
@@ -24,7 +25,10 @@ app.post('/signup', celebrate({
     email: Joi.string().required().email(),
   }),
 }), createUser);
+
 app.use('/', auth, require('./routes/index'));
+
+app.use(errors());
 app.use(require('./middlewares/error'));
 
 app.listen(PORT);
