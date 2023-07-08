@@ -5,7 +5,6 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const BadRequest = require('../errors/bad-request');
 const ConflictError = require('../errors/conflictError');
-const UnauthorizedError = require('../errors/unauthorized');
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -102,7 +101,7 @@ module.exports.login = (req, res, next) => {
       });
     })
     .catch(() => {
-      next(new UnauthorizedError('неверные логин или пароль'));
+      next();
     });
 };
 

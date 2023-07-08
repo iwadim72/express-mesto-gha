@@ -39,7 +39,8 @@ module.exports.deleteCard = (req, res, next) => {
               if (card) {
                 res.send({ data: cardId });
               }
-            });
+            })
+            .catch((err) => next(err));
         } else { next(new ForbiddenError('Вы не создатель карточки')); }
       } else {
         throw new NotFoundError('Карточка с указанным _id не найдена.');
@@ -47,7 +48,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.CastError) {
-        next(new BadRequest('Переданы некоректные данные при создании карточки'));
+        next(new BadRequest('Переданы некоректные данные при удалении карточки'));
       } else {
         next(err);
       }

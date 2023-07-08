@@ -1,14 +1,22 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const mongoose = require('mongoose');
+const BadRequest = require('../errors/bad-request');
 const {
   getUsers, searchUserById, updateUser, updateAvatar, getUserInfo,
 } = require('../controllers/users');
+
+const validationId = (value) => {
+  if (!mongoose.isValidObjectId(value)) {
+    throw new BadRequest('Переданы некоректные данные при удалении карточки');
+  } else { return value; }
+};
 
 router.get('/', getUsers);
 router.get('/me', getUserInfo);
 router.get('/:userId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().length(24),
+    userId: Joi.string().custom(validationId),
   }),
 }), searchUserById);
 router.patch('/me', celebrate({

@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-  // Линтер ругается на next, но без него работать не будет :()
   const { statusCode = 500, message } = err;
 
   res
@@ -9,4 +8,6 @@ module.exports = (err, req, res, next) => {
         ? 'На сервере произошла ошибка'
         : message,
     });
+
+  next();
 };
