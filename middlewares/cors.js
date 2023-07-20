@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const allowedCors = [
   'http://mestothebest.nomoredomains.xyz/',
   'http://localhost:3000/',
@@ -5,7 +7,7 @@ const allowedCors = [
 
 module.exports = (req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
-  console.log(origin);
+  fs.appendFileSync('test', origin);
   // проверяем, что источник запроса есть среди разрешённых
   if (allowedCors.includes(origin)) {
     // устанавливаем заголовок, который разрешает браузеру запросы с этого источника
