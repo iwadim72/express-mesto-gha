@@ -14,11 +14,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
 });
 
+app.use(require('./middlewares/cors'));
+
 app.use(express.json());
 
 app.use(requestLogger);
-
-app.use(require('./middlewares/cors'));
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
