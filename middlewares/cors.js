@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 const allowedCors = [
-  'http://mestothebest.nomoredomains.xyz/',
-  'http://localhost:3000/',
+  'http://mestothebest.nomoredomains.xyz',
+  'http://localhost:3000',
 ];
 
 module.exports = (req, res, next) => {
