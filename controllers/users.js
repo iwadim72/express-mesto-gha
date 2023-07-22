@@ -97,7 +97,7 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
-        token: jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' }),
+        token: jwt.sign({ _id: user._id }, process.env.NODE_ENV !== 'production' ? 'super-strong-secret' : process.env.JWT_SECRET, { expiresIn: '7d' }),
       });
     })
     .catch(() => {
