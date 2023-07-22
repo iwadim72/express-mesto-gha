@@ -1,5 +1,5 @@
 const allowedCors = [
-  'http://mestothebest.nomoredomains.xyz',
+  'https://mestothebest.nomoredomains.xyz',
   'http://localhost:3000',
 ];
 
