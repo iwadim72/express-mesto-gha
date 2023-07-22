@@ -6,7 +6,6 @@ const ForbiddenError = require('../errors/forbiddenError');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .populate('owner')
     .then((cards) => res.send({ data: cards }))
     .catch((err) => next(err));
 };
@@ -16,7 +15,7 @@ module.exports.createCard = (req, res, next) => {
   const owner = req.user;
 
   Card.create({ name, link, owner })
-    .then((card) => res.send({ data: card.populate('owner') }))
+    .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при создании карточки'));
@@ -61,7 +60,6 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .populate('owner')
     .then((card) => {
       if (card) {
         res.send({ data: card });
@@ -82,7 +80,6 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .populate('owner')
     .then((card) => {
       if (card) {
         res.send({ data: card });
